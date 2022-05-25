@@ -5,6 +5,13 @@ const folderPath = path.join(__dirname, 'files');
 const folderPathCopy = path.join(__dirname, 'files-copy');
 
 function copyDir(folder, folderCopy) {
+  fs.readdir(folderCopy, (error, files) => {
+    if (files) {
+      files.forEach(file => {
+        fs.unlink(path.join(folderCopy, file), () => {});
+      });
+    }
+  });
   fs.readdir(folder, (error, files) => {
     files.forEach(file => {
       fs.readFile(path.join(folder, file), 'utf-8', (error, data) => {
